@@ -83,7 +83,7 @@ sonar {
     properties {
         // Pastikan nilai ini sesuai dengan "Project Information" di dashboard SonarCloud kamu
         property("sonar.projectKey", "b-nezzaluna-azzahra-2406495741")
-        property("sonar.organization", "b-nezzaluna-azzahra-2406495741")
+        property("sonar.organization", "B-Nezzaluna Azzahra-2406495741")
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
     }
