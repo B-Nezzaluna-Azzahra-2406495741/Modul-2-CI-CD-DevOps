@@ -48,10 +48,12 @@ dependencies {
 tasks.register<Test>("unitTest") {
     description = "Runs unit tests"
     group = "verification"
+    useJUnitPlatform()
 
     filter {
         excludeTestsMatching("*FunctionalTest")
     }
+    finalizedBy(tasks.jacocoTestReport)
 }
 
 tasks.register<Test>("functionalTest") {
@@ -68,11 +70,11 @@ tasks.withType<Test>().configureEach {
 }
 
 tasks.jacocoTestReport {
-    dependsOn(tasks.test)
     reports {
-        xml.required = true
-        html.required = true
+        xml.required.set(true)
+        html.required.set(true)
     }
+    executionData(tasks.withType<Test>())
 }
 
 tasks.named<Test>("test") {
@@ -82,6 +84,8 @@ tasks.named<Test>("test") {
 sonar {
     properties {
         property("sonar.projectKey", "b-nezzaluna-azzahra-2406495741")
-        property("sonar.organization", "B-Nezzaluna Azzahra-2406495741")
+        property("sonar.organization", "B-Nezzaluna-Azzahra-2406495741")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.coverage.jacoco.xmlReportPaths", "${layout.buildDirectory.get()}/reports/jacoco/test/jacocoTestReport.xml")
     }
 }
