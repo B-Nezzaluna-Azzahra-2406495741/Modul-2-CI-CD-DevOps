@@ -48,12 +48,10 @@ dependencies {
 tasks.register<Test>("unitTest") {
     description = "Runs unit tests"
     group = "verification"
-    useJUnitPlatform()
 
     filter {
         excludeTestsMatching("*FunctionalTest")
     }
-    finalizedBy(tasks.jacocoTestReport)
 }
 
 tasks.register<Test>("functionalTest") {
