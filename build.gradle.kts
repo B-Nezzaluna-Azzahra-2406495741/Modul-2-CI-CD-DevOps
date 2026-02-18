@@ -66,3 +66,22 @@ tasks.register<Test>("functionalTest") {
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+tasks.named<Test>("test") {
+    useJUnitPlatform()
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "b-nezzaluna-azzahra-2406495741")
+        property("sonar.organization", "B-Nezzaluna Azzahra-2406495741")
+    }
+}
