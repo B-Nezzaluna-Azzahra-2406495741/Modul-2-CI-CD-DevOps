@@ -13,7 +13,6 @@ val seleniumJupiterVersion = "5.0.1"
 val webdrivermanagerVersion = "5.6.3"
 val junitJupiterVersion = "5.9.1"
 
-
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
@@ -45,10 +44,19 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
 }
 
+// Mengonfigurasi task pengujian standar agar tidak menjalankan Functional Test di CI [cite: 972]
+tasks.test {
+    useJUnitPlatform()
+    filter {
+        excludeTestsMatching("*FunctionalTest")
+    }
+    finalizedBy(tasks.jacocoTestReport) // Laporan dibuat otomatis setelah tes [cite: 974]
+}
+
 tasks.register<Test>("unitTest") {
     description = "Runs unit tests"
     group = "verification"
-
+    useJUnitPlatform()
     filter {
         excludeTestsMatching("*FunctionalTest")
     }
@@ -57,34 +65,26 @@ tasks.register<Test>("unitTest") {
 tasks.register<Test>("functionalTest") {
     description = "Runs functional tests"
     group = "verification"
-
+    useJUnitPlatform()
     filter {
         includeTestsMatching("*FunctionalTest")
     }
 }
 
-tasks.withType<Test>().configureEach {
-    useJUnitPlatform()
-}
-
 tasks.jacocoTestReport {
-    dependsOn(tasks.test)
+    dependsOn(tasks.test) // Memastikan data tes tersedia [cite: 978]
     reports {
-        xml.required.set(true)
+        xml.required.set(true) // Wajib untuk SonarQube
         html.required.set(true)
     }
-    executionData(tasks.withType<Test>())
-}
-
-tasks.named<Test>("test") {
-    useJUnitPlatform()
 }
 
 sonar {
     properties {
+        // Pastikan nilai ini sesuai dengan "Project Information" di dashboard SonarCloud kamu
         property("sonar.projectKey", "b-nezzaluna-azzahra-2406495741")
-        property("sonar.organization", "B-Nezzaluna-Azzahra-2406495741")
+        property("sonar.organization", "b-nezzaluna-azzahra-2406495741")
         property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.coverage.jacoco.xmlReportPaths", "${layout.buildDirectory.get()}/reports/jacoco/test/jacocoTestReport.xml")
+        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
     }
 }
