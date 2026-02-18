@@ -82,8 +82,8 @@ tasks.jacocoTestReport {
 sonar {
     properties {
         // Pastikan nilai ini sesuai dengan "Project Information" di dashboard SonarCloud kamu
-        property("sonar.projectKey", "b-nezzaluna-azzahra-2406495741_Modul-2-CI-CD-DevOps")
-        property("sonar.organization", "B-Nezzaluna Azzahra-2406495741")
+        property("sonar.projectKey", "B-Nezzaluna-Azzahra-2406495741_Modul-2-CI-CD-DevOps")
+        property("sonar.organization", "b-nezzaluna azzahra-2406495741")
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
     }
