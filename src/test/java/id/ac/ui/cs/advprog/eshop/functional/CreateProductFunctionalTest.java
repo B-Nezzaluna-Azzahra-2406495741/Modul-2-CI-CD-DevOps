@@ -47,7 +47,8 @@ class CreateProductFunctionalTest {
     }
 
     @Test
-    void testCreateProductAndVerifyInList(ChromeDriver driver) throws Exception {
+    void testCreateProductAndVerifyInList(ChromeOptions options, ChromeDriver driver) throws Exception {
+        options.addArguments("--headless", "--disable-gpu", "--no-sandbox", "--disable-dev-shm-usage");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         // navigation to the home page

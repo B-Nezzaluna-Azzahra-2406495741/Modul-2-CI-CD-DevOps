@@ -43,7 +43,8 @@ class DeleteProductFunctionalTest {
     }
 
     @Test
-    void testDeleteProduct(ChromeDriver driver) throws Exception {
+    void testDeleteProduct(ChromeOptions options, ChromeDriver driver) throws Exception {
+        options.addArguments("--headless", "--disable-gpu", "--no-sandbox", "--disable-dev-shm-usage");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         // Arrange new product
