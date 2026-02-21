@@ -83,6 +83,9 @@ sonar {
     properties {
         property("sonar.projectKey", "B-Nezzaluna-Azzahra-2406495741_Modul-2-CI-CD-DevOps")
         property("sonar.organization", "b-nezzaluna-azzahra-2406495741")
+
+        property("sonar.sources", "src/main/java,src/main/resources")
+
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
     }
