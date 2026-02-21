@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+      - ci-cd
+      - module-2-exercise
   pull_request:
     types: [opened, synchronize, reopened]
 
