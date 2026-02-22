@@ -36,7 +36,7 @@ class DeleteProductFunctionalTest {
     }
 
     @Test
-    void testDeleteProduct(ChromeDriver driver) throws Exception {
+    void testDeleteProduct(ChromeDriver driver) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         // Arrange new product
