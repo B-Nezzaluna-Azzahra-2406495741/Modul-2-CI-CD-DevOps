@@ -90,7 +90,7 @@ class ProductControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/product/list"));
 
-        verify(productService).deleteById(eq("id-1"));
+        verify(productService).deleteById("id-1");
     }
 
     @Test
