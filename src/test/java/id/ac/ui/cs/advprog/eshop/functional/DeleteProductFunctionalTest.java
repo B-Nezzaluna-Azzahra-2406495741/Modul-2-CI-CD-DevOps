@@ -16,7 +16,6 @@ import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
@@ -37,7 +36,7 @@ class DeleteProductFunctionalTest {
     }
 
     @Test
-    void testDeleteProduct(ChromeDriver driver) throws Exception {
+    void testDeleteProduct(ChromeDriver driver) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         // Arrange new product
