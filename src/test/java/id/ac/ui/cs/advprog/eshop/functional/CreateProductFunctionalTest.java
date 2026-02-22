@@ -41,13 +41,13 @@ class CreateProductFunctionalTest {
     }
 
     @Test
-    void testCreateProductAndVerifyInList(ChromeDriver driver) throws Exception {
+    void testCreateProductAndVerifyInList(ChromeDriver driver) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         // navigation to the home page
         driver.get(baseUrl);
 
-        // Wait for home page to load and click the button to the product list page
+        // wait for home page to load and click the button to the product list page
         wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Let's Create Product!"))).click();
 
         // wait for product list page to load and verify navigation
