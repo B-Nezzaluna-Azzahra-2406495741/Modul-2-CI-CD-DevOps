@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -42,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
             updatedProduct.setProductQuantity(product.getProductQuantity());
             return updatedProduct;
         }
-        throw new RuntimeException("Product not found with ID: " + product.getProductId());
+        throw new NoSuchElementException("Product not found with ID: " + product.getProductId());
     }
 
     // find all products
