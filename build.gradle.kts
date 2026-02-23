@@ -44,13 +44,12 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
 }
 
-// Mengonfigurasi task pengujian standar agar tidak menjalankan Functional Test di CI [cite: 972]
 tasks.test {
     useJUnitPlatform()
     filter {
         excludeTestsMatching("*FunctionalTest")
     }
-    finalizedBy(tasks.jacocoTestReport) // Laporan dibuat otomatis setelah tes [cite: 974]
+    finalizedBy(tasks.jacocoTestReport)
 }
 
 tasks.register<Test>("unitTest") {
@@ -72,11 +71,19 @@ tasks.register<Test>("functionalTest") {
 }
 
 tasks.jacocoTestReport {
-    dependsOn(tasks.test) // Memastikan data tes tersedia [cite: 978]
+    dependsOn(tasks.test)
     reports {
-        xml.required.set(true) // Wajib untuk SonarQube
+        xml.required.set(true)
         html.required.set(true)
     }
+}
+
+tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+    archiveFileName.set("app.jar")
+}
+
+tasks.getByName<Jar>("jar") {
+    enabled = false
 }
 
 sonar {
