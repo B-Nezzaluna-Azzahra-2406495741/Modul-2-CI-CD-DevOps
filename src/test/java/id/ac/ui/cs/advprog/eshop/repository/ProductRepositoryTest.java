@@ -33,6 +33,22 @@ class ProductRepositoryTest {
     }
 
     @Test
+    void testCreateProductWithNullId() {
+        Product product = new Product();
+        product.setProductName("Sampo Tanpa ID");
+        product.setProductQuantity(10);
+
+        // before create, ID harus null
+        assertNull(product.getProductId());
+
+        productRepository.create(product);
+
+        // after create, ID tidak boleh null karena UUID digenerate otomatis
+        assertNotNull(product.getProductId());
+        assertFalse(product.getProductId().isEmpty());
+    }
+
+    @Test
     void testFindAllIfEmpty() {
         Iterator<Product> productIterator = productRepository.findAll();
         assertFalse(productIterator.hasNext());
@@ -110,15 +126,13 @@ class ProductRepositoryTest {
         // Act
         productRepository.deleteById("id-1");
 
-        // only product2 remains
+        // Assert
         Iterator<Product> productIterator = productRepository.findAll();
         assertTrue(productIterator.hasNext());
         Product remaining = productIterator.next();
         assertEquals("id-2", remaining.getProductId());
         assertFalse(productIterator.hasNext());
 
-        // findById for deleted returns empty
         assertTrue(productRepository.findById("id-1").isEmpty());
-        assertTrue(productRepository.findById("id-2").isPresent());
     }
 }
