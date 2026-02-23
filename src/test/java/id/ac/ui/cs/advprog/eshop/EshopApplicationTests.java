@@ -5,12 +5,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class EshopApplicationTests {
 
     @Test
     void contextLoads() {
-        assertDoesNotThrow(() -> EshopApplication.main(new String[]{}));
     }
 
+    @Test
+    void testMain() {
+        assertDoesNotThrow(() -> EshopApplication.main(new String[]{"--server.port=0"}));
+    }
 }
