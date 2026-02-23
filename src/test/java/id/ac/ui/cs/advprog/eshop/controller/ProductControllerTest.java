@@ -14,7 +14,6 @@ import java.util.Optional;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -54,7 +53,8 @@ class ProductControllerTest {
                         .param("productName", "Test Item")
                         .param("productQuantity", "5"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("list"));
+                // Perbaikan: Menyesuaikan dengan path absolut /product/list
+                .andExpect(redirectedUrl("/product/list"));
 
         verify(productService).create(any(Product.class));
     }
@@ -90,7 +90,7 @@ class ProductControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/product/list"));
 
-        verify(productService).deleteById(eq("id-1"));
+        verify(productService).deleteById("id-1");
     }
 
     @Test

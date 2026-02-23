@@ -3,6 +3,7 @@ plugins {
     jacoco
     id("org.springframework.boot") version "3.4.2"
     id("io.spring.dependency-management") version "1.1.7"
+    id("org.sonarqube") version "7.1.0.6387"
 }
 
 group = "id.ac.ui.cs.advprog"
@@ -11,7 +12,6 @@ val seleniumJavaVersion = "4.14.1"
 val seleniumJupiterVersion = "5.0.1"
 val webdrivermanagerVersion = "5.6.3"
 val junitJupiterVersion = "5.9.1"
-
 
 java {
     toolchain {
@@ -44,10 +44,18 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
 }
 
+tasks.test {
+    useJUnitPlatform()
+    filter {
+        excludeTestsMatching("*FunctionalTest")
+    }
+    finalizedBy(tasks.jacocoTestReport)
+}
+
 tasks.register<Test>("unitTest") {
     description = "Runs unit tests"
     group = "verification"
-
+    useJUnitPlatform()
     filter {
         excludeTestsMatching("*FunctionalTest")
     }
@@ -56,12 +64,36 @@ tasks.register<Test>("unitTest") {
 tasks.register<Test>("functionalTest") {
     description = "Runs functional tests"
     group = "verification"
-
+    useJUnitPlatform()
     filter {
         includeTestsMatching("*FunctionalTest")
     }
 }
 
-tasks.withType<Test>().configureEach {
-    useJUnitPlatform()
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+}
+
+tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+    archiveFileName.set("app.jar")
+}
+
+tasks.getByName<Jar>("jar") {
+    enabled = false
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "B-Nezzaluna-Azzahra-2406495741_Modul-2-CI-CD-DevOps")
+        property("sonar.organization", "b-nezzaluna-azzahra-2406495741")
+
+        property("sonar.sources", "src/main/java,src/main/resources")
+
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
+    }
 }

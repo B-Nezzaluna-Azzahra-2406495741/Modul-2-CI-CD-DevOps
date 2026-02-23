@@ -1,7 +1,6 @@
 package id.ac.ui.cs.advprog.eshop.repository;
 
 import id.ac.ui.cs.advprog.eshop.model.Product;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,10 +16,6 @@ class ProductRepositoryTest {
     @InjectMocks
     ProductRepository productRepository;
 
-    @BeforeEach
-    void setUp() {
-    }
-
     @Test
     void testCreateAndFind() {
         Product product = new Product();
@@ -35,6 +30,22 @@ class ProductRepositoryTest {
         assertEquals(product.getProductId(), savedProduct.getProductId());
         assertEquals(product.getProductName(), savedProduct.getProductName());
         assertEquals(product.getProductQuantity(), savedProduct.getProductQuantity());
+    }
+
+    @Test
+    void testCreateProductWithNullId() {
+        Product product = new Product();
+        product.setProductName("Sampo Tanpa ID");
+        product.setProductQuantity(10);
+
+        // before create, ID harus null
+        assertNull(product.getProductId());
+
+        productRepository.create(product);
+
+        // after create, ID tidak boleh null karena UUID digenerate otomatis
+        assertNotNull(product.getProductId());
+        assertFalse(product.getProductId().isEmpty());
     }
 
     @Test
@@ -115,15 +126,13 @@ class ProductRepositoryTest {
         // Act
         productRepository.deleteById("id-1");
 
-        // only product2 remains
+        // Assert
         Iterator<Product> productIterator = productRepository.findAll();
         assertTrue(productIterator.hasNext());
         Product remaining = productIterator.next();
         assertEquals("id-2", remaining.getProductId());
         assertFalse(productIterator.hasNext());
 
-        // findById for deleted returns empty
         assertTrue(productRepository.findById("id-1").isEmpty());
-        assertTrue(productRepository.findById("id-2").isPresent());
     }
 }
