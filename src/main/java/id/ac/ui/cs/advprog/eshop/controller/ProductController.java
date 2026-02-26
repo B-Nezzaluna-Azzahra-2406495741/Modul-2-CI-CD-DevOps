@@ -14,15 +14,10 @@ import java.util.List;
 @Controller
 @RequestMapping("/product")
 public class ProductController {
-
-    private final ProductService service;
+    @Autowired
+    private ProductService service;
 
     private static final String REDIRECT_PRODUCT_LIST = "redirect:/product/list";
-
-    @Autowired
-    public ProductController(ProductService service) {
-        this.service = service;
-    }
 
     @GetMapping("/create")
     public String createProductPage(Model model) {
@@ -73,12 +68,8 @@ public class ProductController {
 @RequestMapping("/car")
 class CarController extends ProductController {
 
-    private CarServiceImpl carservice;
-
     @Autowired
-    public CarController(ProductService service) {
-        super(service);
-    }
+    private CarServiceImpl carservice;
 
     @GetMapping("/createCar")
     public String createCarPage(Model model) {
