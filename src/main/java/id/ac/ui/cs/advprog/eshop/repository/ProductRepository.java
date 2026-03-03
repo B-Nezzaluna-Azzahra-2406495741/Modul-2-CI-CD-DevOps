@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class ProductRepository {
+public class ProductRepository implements ProductRepositoryInterface {
     private List<Product> productData = new ArrayList<>();
 
     // create product
