@@ -1,30 +1,33 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
+import lombok.Getter; 
 import java.util.Map;
 
-public class Payment {
-    private String id;
-    private String method;
-    private String status;
-    private Map<String, String> paymentData;
+import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 
-    public Payment(String id, String method, String status, Map<String, String> paymentData) {
+@Getter
+public class Payment {
+    private final String id;
+    private final String method;
+    private String status;
+    private final Map<String, String> paymentData;
+
+    public Payment(String id, String method, Map<String, String> paymentData) {
+        if (id == null || id.isBlank() || method == null || paymentData == null || paymentData.isEmpty()) {
+            throw new IllegalArgumentException("Invalid payment arguments");
+        }
+        
         this.id = id;
         this.method = method;
         this.paymentData = paymentData;
-        this.setStatus(status); 
+        this.status = "PENDING"; 
     }
 
     public void setStatus(String status) {
-        if (status.equals("SUCCESS") || status.equals("REJECTED") || status.equals("PENDING")) {
+        if (PaymentStatus.contains(status)) {
             this.status = status;
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid status: " + status);
         }
     }
-
-    public String getId() { return id; }
-    public String getMethod() { return method; }
-    public String getStatus() { return status; }
-    public Map<String, String> getPaymentData() { return paymentData; }
 }
