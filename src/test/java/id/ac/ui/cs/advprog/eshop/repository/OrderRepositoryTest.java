@@ -2,6 +2,11 @@ package id.ac.ui.cs.advprog.eshop.repository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
+import id.ac.ui.cs.advprog.eshop.model.Order;
+import id.ac.ui.cs.advprog.eshop.model.Product;
+
 import java.util.ArrayList;
 import java.util.List;
 
