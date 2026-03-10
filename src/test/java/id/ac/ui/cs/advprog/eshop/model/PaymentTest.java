@@ -2,6 +2,9 @@ package id.ac.ui.cs.advprog.eshop.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
+
 import java.util.HashMap;
 import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
@@ -82,5 +85,25 @@ class PaymentTest {
         assertThrows(IllegalArgumentException.class, () -> {
             payment.setStatus("MEOW");
         });
+    }
+
+    @Test
+    void testPaymentStatusEnumValues() {
+        assertEquals("PENDING", PaymentStatus.PENDING.getValue());
+        assertEquals("SUCCESS", PaymentStatus.SUCCESS.getValue());
+        assertEquals("REJECTED", PaymentStatus.REJECTED.getValue());
+    }
+
+    @Test
+    void testPaymentStatusContainsTrue() {
+        assertTrue(PaymentStatus.contains("PENDING"));
+        assertTrue(PaymentStatus.contains("SUCCESS"));
+        assertTrue(PaymentStatus.contains("REJECTED"));
+    }
+
+    @Test
+    void testPaymentStatusContainsFalse() {
+        assertFalse(PaymentStatus.contains("MEOW"));
+        assertFalse(PaymentStatus.contains(""));
     }
 }
